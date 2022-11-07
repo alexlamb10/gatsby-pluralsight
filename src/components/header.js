@@ -1,6 +1,8 @@
-import { Link } from "gatsby";
+import { Link, StaticQuery, graphql } from "gatsby";
 import React from "react";
+import { siteMetadata } from "../../gatsby-config";
 import * as styles from './header.module.scss'
+import title from "./title";
 
 const HeaderLink = props => (
     <Link className={styles.link} to={props.to}>{props.text}</Link>
@@ -39,16 +41,32 @@ const SocialButton = (props) => {
   }
 
 export default () => (
-    <header className={styles.container}>
-        <div className={styles.row}>
-            <HomeButton to='/' text='My Gatsby Blog' />
-            <SocialButton site="github" username="alexlamb10"></SocialButton>
-            <SocialButton site="linkedin" username="alexlambdev"></SocialButton>
-            <SocialButton site="twitter" username="alexlambdev"></SocialButton>
-        </div>
-        <div className={styles.row}>
-            <HeaderLink to='/' text='ARTICLES' />
-            <HeaderLink to='/about' text='ABOUT' />
-        </div>
-    </header>
+
+  <StaticQuery 
+    query={graphql `
+      query {
+        site{
+          siteMetadata{
+            title
+          }
+        }
+      }
+    `}
+
+    render = {data => (
+      <header className={styles.container}>
+      <div className={styles.row}>
+          <HomeButton to='/' text={data.site.siteMetadata.title} />
+          <SocialButton site="github" username="alexlamb10"></SocialButton>
+          <SocialButton site="linkedin" username="alexlambdev"></SocialButton>
+          <SocialButton site="twitter" username="alexlambdev"></SocialButton>
+      </div>
+      <div className={styles.row}>
+          <HeaderLink to='/' text='ARTICLES' />
+          <HeaderLink to='/about' text='ABOUT' />
+      </div>
+  </header>
+    )}
+  />
+    
 )
