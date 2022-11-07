@@ -12,8 +12,8 @@ export default () => (
             <Link to='/'>My Gatsby Blog</Link>
         </div>
         <div className={styles.row}>
-            <Link to='/'>Blog</Link>
-            <Link to='/about'>Articles</Link>
+            <HeaderLink to='/' text='ARTICLES' />
+            <HeaderLink to='/about' text='ABOUT' />
         </div>
     </header>
 )
